@@ -1,0 +1,234 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+#root {
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    height: 100vh;
+}
+
+.nav {
+    height: 50px;
+    background-color: darkolivegreen;
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav .title {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nav .account {
+    font-size: 12px;
+}
+
+.widget-container {
+    display: grid;
+    margin: 0 auto;
+    max-width: 660px;
+    aspect-ratio: 7/6;
+    margin-top: 140px;
+    background-color: darkolivegreen;
+    color: white;
+    padding: 50px 100px;
+    overflow: hidden;
+    border-radius: 24px;
+}
+
+.balances-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 20px;
+    justify-content: space-between;
+}
+
+.balances-title {
+    font-size: 20px;
+}
+
+.form {
+    display: grid;
+    aspect-ratio: 6/4;
+}
+
+.input {
+    margin: 6rem 0;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 20px;
+    justify-content: space-around;
+}
+
+.btn {
+    width: 11rem;
+    aspect-ratio: 3;
+    border: 1px solid white;
+    border-radius: 10px;
+    align-self: center;
+    justify-self: center;
+    background: rgb(255,140,0);
+    font-size: 18px;
+    color: whitesmoke;
+    letter-spacing: 1px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+button.btn:hover {
+    color: white;
+    background: rgba(255,140,0,0.8);
+}
+
+.deposit {
+    border: 0 solid;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+    outline: 1px solid;
+    outline-color: rgba(255, 255, 255, .5);
+    outline-offset: 0px;
+    text-shadow: none;
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+button.btn.deposit:hover {
+    background: rgb(255,140,0);
+    border: 1px solid;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px darkolivegreen;
+}
+
+.input-wrapper {
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+}
+
+.usdt {
+    width: 50px;
+    height: 50px;
+    margin-right: 25px;
+}
+
+.input {
+    background: transparent;
+    border: none;
+    outline: none;
+    margin: 0;
+    height: 40px;
+    font-size: 48px;
+    letter-spacing: 0.5rem;
+    color: white;
+    overflow: hidden;
+}
+
+input::placeholder {
+    letter-spacing: 0.5px;
+    font-size: 38px;
+    color: #Bbb;
+}
+
+/* LOADER  */
+
+.lds-roller {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    align-self: center;
+    justify-self: center;
+  }
+.lds-roller div {
+    animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    transform-origin: 40px 40px;
+}
+.lds-roller div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: green;
+    margin: -4px 0 0 -4px;
+}
+.lds-roller div:nth-child(1) {
+    animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+    top: 63px;
+    left: 63px;
+}
+.lds-roller div:nth-child(2) {
+    animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+    top: 68px;
+    left: 56px;
+}
+.lds-roller div:nth-child(3) {
+    animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+    top: 71px;
+    left: 48px;
+}
+.lds-roller div:nth-child(4) {
+    animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+    top: 72px;
+    left: 40px;
+}
+.lds-roller div:nth-child(5) {
+    animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+    top: 71px;
+    left: 32px;
+}
+.lds-roller div:nth-child(6) {
+    animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+    top: 68px;
+    left: 24px;
+}
+.lds-roller div:nth-child(7) {
+    animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+    top: 63px;
+    left: 17px;
+}
+.lds-roller div:nth-child(8) {
+    animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+    top: 56px;
+    left: 12px;
+}
+@keyframes lds-roller {
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}
+
+/* END LAODER */
