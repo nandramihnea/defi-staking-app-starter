@@ -1,3 +1,4 @@
+const { artifacts } = require("truffle");
 const DecentralBank = artifacts.require('DecentralBank');
 
 module.exports = async function issueRewards(callback) {

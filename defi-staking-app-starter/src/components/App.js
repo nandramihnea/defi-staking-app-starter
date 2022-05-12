@@ -12,9 +12,9 @@ const App = () => {
     const [tether, setTether] = useState({});
     const [tetherBalance, setTetherBalance] = useState('0');
     const [rwd, setRwd] = useState({});
-    const [rwdBalance, setRwdBalance] = useState(0);
+    const [rwdBalance, setRwdBalance] = useState('0');
     const [decentralBank, setDecentralBank] = useState({});
-    const [stakingBalance, setStakingBalance] = useState(0);
+    const [stakingBalance, setStakingBalance] = useState('0');
     const [isSwitch, setIsSwitch] = useState(false);
     const [loading, setLoading] = useState(true);
 
@@ -27,12 +27,11 @@ const App = () => {
                 window.web3 = new Web3(window.web3.currentProvider);
             } else {
                 const networkId = await window.web3.eth.net.getId();
-                console.log('networkId: ', networkId);
-                if(networkId !== 5777) {
-                    // window.alert('No ethereum browser detected. Please install MetaMask.');
-                } else {
-                    // window.alert('Switch network')
-                }
+                // if(networkId !== 5777) {
+                //     // window.alert('No ethereum browser detected. Please install MetaMask.');
+                // } else {
+                //     // window.alert('Switch network')
+                // }
             }
         }
 
@@ -45,37 +44,31 @@ const App = () => {
             const accounts = await web3.eth.getAccounts();
             setAccount(accounts[0]);
             const networkId = await web3.eth.net.getId();
-            console.log('networkId: ', networkId);
-            console.log('account: ', accounts);
 
             // Load Tether contract
             const tetherData = Tether.networks[networkId];
-            console.log('tetherData: ', tetherData);
             if(tetherData) {
                 const tether = new web3.eth.Contract(Tether.abi, tetherData.address);
                 setTether(tether);
                 let tetherBalance = await tether.methods.balanceOf(account).call();
-                console.log('tetherBalance: ', tetherBalance);
                 setTetherBalance(tetherBalance.toString());
             } else {
-                window.alert('Tether contract not deployed to this network.');
+                // window.alert('Tether contract not deployed to this network.');
             }
 
             // Load Rwd contract
             const rwdData = Rwd.networks[networkId];
-            console.log('rwdData: ', rwdData);
             if(rwdData) {
                 const rwd = new web3.eth.Contract(Rwd.abi, rwdData.address);
                 setRwd(rwd);
                 let rwdBalance = await rwd.methods.balanceOf(account).call();
                 setRwdBalance(rwdBalance.toString());
             } else {
-                window.alert('Rwd contract not deployed to this network.');
+                // window.alert('Rwd contract not deployed to this network.');
             }
 
             // Load DecentralBank contract
             const decentralBankData = DecentralBank.networks[networkId];
-            console.log('decentralBankData: ', decentralBankData);
             if(decentralBankData) {
                 const decentralBank = new web3.eth.Contract(DecentralBank.abi, decentralBankData.address);
                 setDecentralBank(decentralBank);
@@ -88,7 +81,7 @@ const App = () => {
 
         loadBlockchainData();
         setLoading(false);
-    }, [loading]);
+    }, [loading, account]);
 
     return (
         <>
