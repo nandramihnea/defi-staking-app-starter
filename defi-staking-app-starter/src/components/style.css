@@ -114,7 +114,7 @@ button.btn.deposit:hover {
 .input-wrapper {
     margin-top: 5rem;
     display: grid;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: max-content 1fr max-content;
     align-items: center;
 }
 
@@ -140,6 +140,19 @@ input::placeholder {
     letter-spacing: 0.5px;
     font-size: 38px;
     color: #Bbb;
+}
+
+.amount-wrapper {
+    display: grid;
+    text-align: right;
+    font-size: 10px;
+}
+
+.max {
+    color: rgb(255,140,0);
+    text-decoration: underline;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 /* LOADER  */

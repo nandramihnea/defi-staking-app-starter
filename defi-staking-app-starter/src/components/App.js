@@ -10,7 +10,7 @@ import Loader from './Loader';
 const App = () => {
     const [account, setAccount] = useState('0x0000000000000000000000000000000000000000');
     const [tether, setTether] = useState({});
-    const [tetherBalance, setTetherBalance] = useState(0);
+    const [tetherBalance, setTetherBalance] = useState('0');
     const [rwd, setRwd] = useState({});
     const [rwdBalance, setRwdBalance] = useState(0);
     const [decentralBank, setDecentralBank] = useState({});
@@ -42,10 +42,11 @@ const App = () => {
     useEffect(() => {
         const loadBlockchainData = async () => {
             const web3 = window.web3;
-            const account = await web3.eth.getAccounts();
-            setAccount(account[0]);
+            const accounts = await web3.eth.getAccounts();
+            setAccount(accounts[0]);
             const networkId = await web3.eth.net.getId();
             console.log('networkId: ', networkId);
+            console.log('account: ', accounts);
 
             // Load Tether contract
             const tetherData = Tether.networks[networkId];
@@ -53,29 +54,32 @@ const App = () => {
             if(tetherData) {
                 const tether = new web3.eth.Contract(Tether.abi, tetherData.address);
                 setTether(tether);
-                let tetherBalance = await tether.methods.balanceOf(account[0]).call();
+                let tetherBalance = await tether.methods.balanceOf(account).call();
+                console.log('tetherBalance: ', tetherBalance);
                 setTetherBalance(tetherBalance.toString());
             } else {
-                // window.alert('Tether contract not deployed to this network.');
+                window.alert('Tether contract not deployed to this network.');
             }
 
             // Load Rwd contract
             const rwdData = Rwd.networks[networkId];
+            console.log('rwdData: ', rwdData);
             if(rwdData) {
                 const rwd = new web3.eth.Contract(Rwd.abi, rwdData.address);
                 setRwd(rwd);
-                let rwdBalance = await rwd.methods.balanceOf(account[0]).call();
+                let rwdBalance = await rwd.methods.balanceOf(account).call();
                 setRwdBalance(rwdBalance.toString());
             } else {
-                // window.alert('Rwd contract not deployed to this network.');
+                window.alert('Rwd contract not deployed to this network.');
             }
 
             // Load DecentralBank contract
             const decentralBankData = DecentralBank.networks[networkId];
+            console.log('decentralBankData: ', decentralBankData);
             if(decentralBankData) {
                 const decentralBank = new web3.eth.Contract(DecentralBank.abi, decentralBankData.address);
                 setDecentralBank(decentralBank);
-                let stakingBalance = await decentralBank.methods.stakingBalance(account[0]).call();
+                let stakingBalance = await decentralBank.methods.stakingBalance(account).call();
                 setStakingBalance(stakingBalance.toString());
             } else {
                 // window.alert('DecentralBank contract not deployed to this network.');
@@ -89,7 +93,13 @@ const App = () => {
     return (
         <>
             <Navigation account={account} />
-            {loading ? <Loader /> : <Main />}
+            {loading ? <Loader /> :
+                <Main
+                    tetherBalance={tetherBalance}
+                    rwdBalance={rwdBalance}
+                    stakingBalance={stakingBalance}
+                />
+            }
         </>
     )
 }

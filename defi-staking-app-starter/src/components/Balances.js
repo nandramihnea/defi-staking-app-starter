@@ -5,8 +5,8 @@ const Balances = ({stakingBalance, rewardBalance}) => {
     <div className='balances-wrapper'>
       <span className='balances-title'>Staking Balance</span>
       <span className='balances-title'>Reward Balance</span>
-      <span>{stakingBalance}</span>
-      <span>{rewardBalance}</span>
+      <span>{window.web3.utils.fromWei(window.web3.utils.toBN(stakingBalance), 'Ether')} USDT</span>
+      <span>{window.web3.utils.fromWei(window.web3.utils.toBN(rewardBalance), 'Ether')} RWD</span>
     </div>
   )
 }
