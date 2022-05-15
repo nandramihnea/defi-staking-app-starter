@@ -7,6 +7,7 @@ import DecentralBank from '../truffle_abis/DecentralBank.json';
 import Main from './Main';
 import Loader from './Loader';
 
+export const AIRDROPTIME = 5;
 const App = () => {
     const [account, setAccount] = useState('0x0000000000000000000000000000000000000000');
     const [tether, setTether] = useState({});
@@ -15,8 +16,8 @@ const App = () => {
     const [rwdBalance, setRwdBalance] = useState('0');
     const [decentralBank, setDecentralBank] = useState({});
     const [stakingBalance, setStakingBalance] = useState('0');
-    const [isSwitch, setIsSwitch] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [airdropTime, setAirdropTime] = useState(AIRDROPTIME);
 
     useEffect(() => {
         const loadWeb3 = async () => {
@@ -81,7 +82,36 @@ const App = () => {
 
         loadBlockchainData();
         setLoading(false);
-    }, [loading, account]);
+    }, [loading, account, stakingBalance, rwdBalance, tetherBalance]);
+
+    // staking function
+    const stakeTokens = (amount) => {
+        setLoading(true);
+        tether.methods.approve(decentralBank._address, amount).send({from: account})
+            .on('transactionHash', (hash) => {
+                decentralBank.methods.depositTokens(amount).send({from: account})
+                    .on('transactionHash', (hash) => {
+                        setLoading(false);
+                    })
+                });
+    }
+
+    // withdraw function
+    const withdrawTokens = () => {
+        setLoading(true);
+        decentralBank.methods.unstakeTokens().send({from: account})
+            .on('transactionHash', (hash) => {
+                setLoading(false);
+            })
+    }
+
+    // issue reward tokens
+    const issueRewardTokens = () => {
+        rwd.methods.issueTokens().send({from: account})
+            .on('transactionHash', (hash) => {
+                setAirdropTime(AIRDROPTIME);
+            })
+    }
 
     return (
         <>
@@ -91,6 +121,11 @@ const App = () => {
                     tetherBalance={tetherBalance}
                     rwdBalance={rwdBalance}
                     stakingBalance={stakingBalance}
+                    stakeTokens={stakeTokens}
+                    withdrawTokens={withdrawTokens}
+                    airdropTime={airdropTime}
+                    setAirdropTime={setAirdropTime}
+                    issueRewardTokens={issueRewardTokens}
                 />
             }
         </>

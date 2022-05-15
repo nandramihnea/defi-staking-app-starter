@@ -47,7 +47,7 @@ contract DecentralBank {
 
         for(uint i=0; i<stakers.length; i++) {
             address recepient = stakers[i];
-            // staking reward would be the amount they staked divided by 9
+            // staking rew ard would be the amount they staked divided by 9
             uint balance = stakingBalance[recepient] / 9;
             if(balance > 0) {
                 rwd.transfer(recepient, balance);

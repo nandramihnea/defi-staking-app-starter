@@ -1,12 +1,13 @@
 import React from 'react'
+import { asEther } from '../scripts/utils'
 
 const Balances = ({stakingBalance, rewardBalance}) => {
   return (
     <div className='balances-wrapper'>
       <span className='balances-title'>Staking Balance</span>
       <span className='balances-title'>Reward Balance</span>
-      <span>{window.web3.utils.fromWei(window.web3.utils.toBN(stakingBalance), 'Ether')} USDT</span>
-      <span>{window.web3.utils.fromWei(window.web3.utils.toBN(rewardBalance), 'Ether')} RWD</span>
+      <span>{asEther(stakingBalance)} USDT</span>
+      <span>{asEther(rewardBalance)} RWD</span>
     </div>
   )
 }
