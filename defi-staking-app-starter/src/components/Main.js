@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { asEther, asWei } from '../scripts/utils';
 import Airdrop from './Airdrop';
 import { AIRDROPTIME } from './App';
@@ -16,7 +16,6 @@ const Main = ({
   setAirdropTime,
   issueRewardTokens,
 }) => {
-  const inputRef = useRef(null);
   const [isDisabled, setIsDisabled] = useState(true);
   const [validationMessage, setValidationMessage] = useState('');
   const [isValid, setIsValid] = useState(true);
@@ -24,15 +23,13 @@ const Main = ({
   const [loading, setLoading] = useState(false);
 
   const handleMaxClick = () => {
-    inputRef.current.value = asEther(tetherBalance);
+    setInputValue(asEther(tetherBalance));
+    setIsDisabled(false);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let amount;
-    amount = inputRef.current.value.toString();
-    amount = asWei(amount);
-    stakeTokens(amount);
+    stakeTokens(asWei(inputValue.toString()));
   }
 
   const handleInputChange = (event) => {
@@ -92,7 +89,6 @@ const Main = ({
           <div className='input-wrapper'>
             <img src={usdt} className="usdt" alt="usdt" />
             <input
-              ref={inputRef}
               value={inputValue}
               onChange={e => handleInputChange(e)}
               className="input"
