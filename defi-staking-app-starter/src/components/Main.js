@@ -54,24 +54,20 @@ const Main = ({
   };
 
   useEffect(() => {
-    const timerInterval = async () => {
-      let interval;
-      if(stakingBalance <= asWei('50')) return;
-      interval = setInterval(() => {
+    if(stakingBalance <= asWei('50')) return;
+
+    if(airdropTime === 0) {
+      setLoading(true);
+      // issueRewardTokens();
+      setTimeout(() => {
+        setLoading(false);
+        setAirdropTime(AIRDROPTIME);
+      }, 123000);
+    } else {
+      setTimeout(() => {
         setAirdropTime(airdropTime - 1);
-        // if(airdropTime === 0) {
-        //   setLoading(true);
-        //   delay(2000);
-        //   // issueRewardTokens();
-
-        //   setLoading(false);
-        //   setAirdropTime(AIRDROPTIME);
-        // }
       }, 1000);
-      return () => clearInterval(interval);
-    };
-
-    timerInterval();
+    }
   }, [airdropTime, stakingBalance]);
 
   const delay = (time) => {
